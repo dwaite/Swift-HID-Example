@@ -64,7 +64,7 @@ class BusyLight : NSObject {
     }
 
     
-    func initUsb() {
+    @objc func initUsb() {
         let deviceMatch = [kIOHIDProductIDKey: productId, kIOHIDVendorIDKey: vendorId]
         let managerRef = IOHIDManagerCreate(kCFAllocatorDefault, IOOptionBits(kIOHIDOptionsTypeNone))
         
