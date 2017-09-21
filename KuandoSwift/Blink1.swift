@@ -28,9 +28,9 @@ class Blink1 : NSObject {
             return
         }
         let reportId : CFIndex = CFIndex(data[0])
-        if let busylight = device {
+        if let blink1 = device {
             print("Senting output: \([UInt8](data))")
-            IOHIDDeviceSetReport(busylight, kIOHIDReportTypeFeature, reportId, [UInt8](data), data.count)
+            IOHIDDeviceSetReport(blink1, kIOHIDReportTypeFeature, reportId, [UInt8](data), data.count)
         }
     }
     
