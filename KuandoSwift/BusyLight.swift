@@ -10,15 +10,15 @@ import Foundation
 import IOKit.hid
 
 class BusyLight : NSObject {
-    let vendorId = 0x04D8
-    let productId = 0xF848
-    let reportSize = 64//Device specific
+    let vendorId = 0x27B8
+    let productId = 0x01ED
+    let reportSize = 8 //Device specific
     static let singleton = BusyLight()
     var device : IOHIDDevice? = nil
     
     
     func input(_ inResult: IOReturn, inSender: UnsafeMutableRawPointer, type: IOHIDReportType, reportId: UInt32, report: UnsafeMutablePointer<UInt8>, reportLength: CFIndex) {
-        let message = Data(bytes: UnsafePointer<UInt8>(report), count: reportLength)
+        let message = Data(bytes: report, count: reportLength)
         print("Input received: \(message)")
     }
     
@@ -27,17 +27,17 @@ class BusyLight : NSObject {
             print("output data too large for USB report")
             return
         }
-        let reportId : CFIndex = 0
+        let reportId : CFIndex = CFIndex(data[0])
         if let busylight = device {
-            print("Senting output: \(data)")
-            IOHIDDeviceSetReport(busylight, kIOHIDReportTypeOutput, reportId, (data as NSData).bytes.bindMemory(to: UInt8.self, capacity: data.count), data.count);
+            print("Senting output: \([UInt8](data))")
+            IOHIDDeviceSetReport(busylight, kIOHIDReportTypeFeature, reportId, [UInt8](data), data.count)
         }
     }
     
     func connected(_ inResult: IOReturn, inSender: UnsafeMutableRawPointer, inIOHIDDeviceRef: IOHIDDevice!) {
         print("Device connected")
         // It would be better to look up the report size and create a chunk of memory of that size
-        let report = UnsafeMutablePointer<UInt8>.allocate(capacity: reportSize)
+        let report = UnsafeMutablePointer<UInt8>.allocate(capacity: reportSize)        
         device = inIOHIDDeviceRef
         
         let inputCallback : IOHIDReportCallback = { inContext, inResult, inSender, type, reportId, report, reportLength in
@@ -48,14 +48,23 @@ class BusyLight : NSObject {
         //Hook up inputcallback
         IOHIDDeviceRegisterInputReportCallback(device!, report, reportSize, inputCallback, unsafeBitCast(self, to: UnsafeMutableRawPointer.self));
         
-        //Turn on light to demonstrate sending a command
-        let sound : UInt8 = 0
-        let r : UInt8 = 0
-        let g : UInt8 = 0xff
-        let b : UInt8 = 0
-        let bytes : [UInt8] = [0, 0, r, g, b, 0, 0, sound, 0, 0, 0, 0, 0, 0]
+        /* https://github.com/todbot/blink1/blob/master/docs/blink1-hid-commands.md
+         - byte 0 = report_id (0x01)
+         - byte 1 = command action ('c' = fade to rgb, 'v' get firmware version, etc.)
+         - byte 2 = cmd arg 0 (e.g. red)
+         - byte 3 = cmd arg 1 (e.g. green)
+         - byte 4 = cmd arg 2 (e.g. blue)
+         */
         
-        self.output(Data(bytes: UnsafePointer<UInt8>(bytes), count:bytes.count))
+        //Turn on light to demonstrate sending a command
+        let reportId : UInt8 = 1
+        let command : UInt8 = UInt8(ascii: "n")
+        let r : UInt8 = 0
+        let g : UInt8 = 0xFF
+        let b : UInt8 = 0
+        let bytes : [UInt8] = [reportId, command, r, g, b]
+        
+        self.output(Data(bytes))
     }
     
     func removed(_ inResult: IOReturn, inSender: UnsafeMutableRawPointer, inIOHIDDeviceRef: IOHIDDevice!) {
