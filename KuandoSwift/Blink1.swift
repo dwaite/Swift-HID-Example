@@ -41,12 +41,13 @@ class Blink1 : NSObject {
         device = inIOHIDDeviceRef
         
         let inputCallback : IOHIDReportCallback = { inContext, inResult, inSender, type, reportId, report, reportLength in
-            let this : Blink1 = unsafeBitCast(inContext, to: Blink1.self)
+            let this : Blink1 = Unmanaged<Blink1>.fromOpaque(inContext!).takeUnretainedValue()
             this.input(inResult, inSender: inSender!, type: type, reportId: reportId, report: report, reportLength: reportLength)
         }
         
         //Hook up inputcallback
-        IOHIDDeviceRegisterInputReportCallback(device!, report, reportSize, inputCallback, unsafeBitCast(self, to: UnsafeMutableRawPointer.self));
+        let this = Unmanaged.passRetained(self).toOpaque()
+        IOHIDDeviceRegisterInputReportCallback(device!, report, reportSize, inputCallback, this)
         
         /* https://github.com/todbot/blink1/blob/master/docs/blink1-hid-commands.md
          - byte 0 = report_id (0x01)
@@ -71,30 +72,31 @@ class Blink1 : NSObject {
         print("Device removed")
         NotificationCenter.default.post(name: Notification.Name(rawValue: "deviceDisconnected"), object: nil, userInfo: ["class": NSStringFromClass(type(of: self))])
     }
-
     
+
     @objc func initUsb() {
         let deviceMatch = [kIOHIDProductIDKey: productId, kIOHIDVendorIDKey: vendorId]
         let managerRef = IOHIDManagerCreate(kCFAllocatorDefault, IOOptionBits(kIOHIDOptionsTypeNone))
         
         IOHIDManagerSetDeviceMatching(managerRef, deviceMatch as CFDictionary?)
-        IOHIDManagerScheduleWithRunLoop(managerRef, CFRunLoopGetCurrent(), CFRunLoopMode.defaultMode.rawValue);
-        IOHIDManagerOpen(managerRef, 0);
+        IOHIDManagerScheduleWithRunLoop(managerRef, CFRunLoopGetCurrent(), CFRunLoopMode.defaultMode.rawValue)
+        IOHIDManagerOpen(managerRef, 0)
         
         let matchingCallback : IOHIDDeviceCallback = { inContext, inResult, inSender, inIOHIDDeviceRef in
-            let this : Blink1 = unsafeBitCast(inContext, to: Blink1.self)
+            let this : Blink1 = Unmanaged<Blink1>.fromOpaque(inContext!).takeUnretainedValue()
             this.connected(inResult, inSender: inSender!, inIOHIDDeviceRef: inIOHIDDeviceRef)
         }
         
         let removalCallback : IOHIDDeviceCallback = { inContext, inResult, inSender, inIOHIDDeviceRef in
-            let this : Blink1 = unsafeBitCast(inContext, to: Blink1.self)
+            let this : Blink1 = Unmanaged<Blink1>.fromOpaque(inContext!).takeUnretainedValue()
             this.removed(inResult, inSender: inSender!, inIOHIDDeviceRef: inIOHIDDeviceRef)
         }
         
-        IOHIDManagerRegisterDeviceMatchingCallback(managerRef, matchingCallback, unsafeBitCast(self, to: UnsafeMutableRawPointer.self))
-        IOHIDManagerRegisterDeviceRemovalCallback(managerRef, removalCallback, unsafeBitCast(self, to: UnsafeMutableRawPointer.self))
+        let this = Unmanaged.passRetained(self).toOpaque()
+        IOHIDManagerRegisterDeviceMatchingCallback(managerRef, matchingCallback, this)
+        IOHIDManagerRegisterDeviceRemovalCallback(managerRef, removalCallback, this)
         
-        RunLoop.current.run();
+        RunLoop.current.run()
     }
 
 }
