@@ -24,7 +24,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		6D2FB9301B35076A00FB16B5 /* KuandoSwift */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = KuandoSwift; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D2FB9301B35076A00FB16B5 /* Swift-HID-Example */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Swift-HID-Example"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D2FB9331B35076A00FB16B5 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		6D2FB93A1B3507B400FB16B5 /* Blink1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Blink1.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -43,7 +43,7 @@
 		6D2FB9271B35076A00FB16B5 = {
 			isa = PBXGroup;
 			children = (
-				6D2FB9321B35076A00FB16B5 /* KuandoSwift */,
+				6D2FB9321B35076A00FB16B5 /* Swift-HID-Example */,
 				6D2FB9311B35076A00FB16B5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -51,26 +51,26 @@
 		6D2FB9311B35076A00FB16B5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6D2FB9301B35076A00FB16B5 /* KuandoSwift */,
+				6D2FB9301B35076A00FB16B5 /* Swift-HID-Example */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		6D2FB9321B35076A00FB16B5 /* KuandoSwift */ = {
+		6D2FB9321B35076A00FB16B5 /* Swift-HID-Example */ = {
 			isa = PBXGroup;
 			children = (
 				6D2FB9331B35076A00FB16B5 /* main.swift */,
 				6D2FB93A1B3507B400FB16B5 /* Blink1.swift */,
 			);
-			path = KuandoSwift;
+			path = "Swift-HID-Example";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6D2FB92F1B35076A00FB16B5 /* KuandoSwift */ = {
+		6D2FB92F1B35076A00FB16B5 /* Swift-HID-Example */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6D2FB9371B35076A00FB16B5 /* Build configuration list for PBXNativeTarget "KuandoSwift" */;
+			buildConfigurationList = 6D2FB9371B35076A00FB16B5 /* Build configuration list for PBXNativeTarget "Swift-HID-Example" */;
 			buildPhases = (
 				6D2FB92C1B35076A00FB16B5 /* Sources */,
 				6D2FB92D1B35076A00FB16B5 /* Frameworks */,
@@ -80,9 +80,9 @@
 			);
 			dependencies = (
 			);
-			name = KuandoSwift;
+			name = "Swift-HID-Example";
 			productName = KuandoSwift;
-			productReference = 6D2FB9301B35076A00FB16B5 /* KuandoSwift */;
+			productReference = 6D2FB9301B35076A00FB16B5 /* Swift-HID-Example */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -100,7 +100,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 6D2FB92B1B35076A00FB16B5 /* Build configuration list for PBXProject "KuandoSwift" */;
+			buildConfigurationList = 6D2FB92B1B35076A00FB16B5 /* Build configuration list for PBXProject "Swift-HID-Example" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -112,7 +112,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6D2FB92F1B35076A00FB16B5 /* KuandoSwift */,
+				6D2FB92F1B35076A00FB16B5 /* Swift-HID-Example */,
 			);
 		};
 /* End PBXProject section */
@@ -246,7 +246,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6D2FB92B1B35076A00FB16B5 /* Build configuration list for PBXProject "KuandoSwift" */ = {
+		6D2FB92B1B35076A00FB16B5 /* Build configuration list for PBXProject "Swift-HID-Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6D2FB9351B35076A00FB16B5 /* Debug */,
@@ -255,7 +255,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6D2FB9371B35076A00FB16B5 /* Build configuration list for PBXNativeTarget "KuandoSwift" */ = {
+		6D2FB9371B35076A00FB16B5 /* Build configuration list for PBXNativeTarget "Swift-HID-Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6D2FB9381B35076A00FB16B5 /* Debug */,

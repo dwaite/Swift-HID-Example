@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:KuandoSwift.xcodeproj">
+      location = "self:/Users/bettse/Projects/Swift-HID-Example/Swift-HID-Example.xcodeproj">
    </FileRef>
 </Workspace>
