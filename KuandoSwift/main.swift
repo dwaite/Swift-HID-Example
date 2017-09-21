@@ -9,8 +9,8 @@
 import Foundation
 import AppKit
 
-let busylight = BusyLight.singleton
-var daemon = Thread(target: busylight, selector:#selector(BusyLight.initUsb), object: nil)
+let busylight = Blink1.singleton
+var daemon = Thread(target: busylight, selector:#selector(Blink1.initUsb), object: nil)
 
 daemon.start()
 RunLoop.current.run()

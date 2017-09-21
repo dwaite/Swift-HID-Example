@@ -1,5 +1,5 @@
 	//
-//  BusyLight.swift
+//  Blink1.swift
 //  KuandoSwift
 //
 //  Created by Eric Betts on 6/19/15.
@@ -9,11 +9,11 @@
 import Foundation
 import IOKit.hid
 
-class BusyLight : NSObject {
+class Blink1 : NSObject {
     let vendorId = 0x27B8
     let productId = 0x01ED
     let reportSize = 8 //Device specific
-    static let singleton = BusyLight()
+    static let singleton = Blink1()
     var device : IOHIDDevice? = nil
     
     
@@ -41,7 +41,7 @@ class BusyLight : NSObject {
         device = inIOHIDDeviceRef
         
         let inputCallback : IOHIDReportCallback = { inContext, inResult, inSender, type, reportId, report, reportLength in
-            let this : BusyLight = unsafeBitCast(inContext, to: BusyLight.self)
+            let this : Blink1 = unsafeBitCast(inContext, to: Blink1.self)
             this.input(inResult, inSender: inSender!, type: type, reportId: reportId, report: report, reportLength: reportLength)
         }
         
@@ -82,12 +82,12 @@ class BusyLight : NSObject {
         IOHIDManagerOpen(managerRef, 0);
         
         let matchingCallback : IOHIDDeviceCallback = { inContext, inResult, inSender, inIOHIDDeviceRef in
-            let this : BusyLight = unsafeBitCast(inContext, to: BusyLight.self)
+            let this : Blink1 = unsafeBitCast(inContext, to: Blink1.self)
             this.connected(inResult, inSender: inSender!, inIOHIDDeviceRef: inIOHIDDeviceRef)
         }
         
         let removalCallback : IOHIDDeviceCallback = { inContext, inResult, inSender, inIOHIDDeviceRef in
-            let this : BusyLight = unsafeBitCast(inContext, to: BusyLight.self)
+            let this : Blink1 = unsafeBitCast(inContext, to: Blink1.self)
             this.removed(inResult, inSender: inSender!, inIOHIDDeviceRef: inIOHIDDeviceRef)
         }
         
